@@ -1,6 +1,4 @@
 
-var correctAnswers = 0;
-
 var allQuestions = {
   questions: [{
     question: "In Aladdin, what is the name of Jasmine's pet tiger?",
@@ -46,22 +44,23 @@ var allQuestions = {
 function startGame() {
   for (var i = 0; i < allQuestions.questions.length; i++) {
     $("#quiz1").append(`
-    <div class="question-container">
+    <div class="question-container"><form>
       <div class="question">${allQuestions.questions[i].question}</div>
       <div class="choices">
         <label>
-          <input type="radio" name="question">${allQuestions.questions[i].choices[0]}              
-        </label>
+          <input type="radio" name="question` + i + `">${allQuestions.questions[i].choices[0]}              
+        </label><br>
         <label>
-          <input type="radio" name="question">${allQuestions.questions[i].choices[1]}              
-        </label>
+          <input type="radio" name="question` + i + `">${allQuestions.questions[i].choices[1]}              
+        </label><br>
         <label>
-          <input type="radio" name="question">${allQuestions.questions[i].choices[2]}              
-        </label>
+          <input type="radio" name="question` + i + `">${allQuestions.questions[i].choices[2]}              
+        </label><br>
         <label>
-          <input type="radio" name="question">${allQuestions.questions[i].choices[3]}              
-        </label>
+          <input type="radio" name="question` + i + `">${allQuestions.questions[i].choices[3]}              
+        </label><br>
       </div>  
+      </form>
     </div>
     
   `)
@@ -74,38 +73,41 @@ function startGame() {
 
 }
 
-//  Set our number counter to 100.
-var number = 25;
+//  Set our number counter to 25.
+var number = 35;
 //  Variable that will hold our interval ID when we execute
 //  the "run" function
 var intervalId;
-//  When the submit button gets clicked, run the stop function.
-$("#submitButton").on("click", stop);
 
 //  When the start game button gets clicked, execute the run function.
 $("#startButton").on("click", run);
+//  When the submit button gets clicked, run the stop function.
+$("#submitButton").on("click", stop);
 
 //  The run function sets an interval
 //  that runs the decrement function once a second.
-//  *****BUG FIX******** 
 //  Clearing the intervalId prior to setting our new intervalId will not allow multiple instances.
 function run() {
   clearInterval(intervalId);
   intervalId = setInterval(decrement, 1000);
-}
-//  The decrement function.
-function decrement() {
-  //  Decrease number by one.
-  number--;
-  //  Show the number in the #show-number tag.
-  $("#timer").html("You have " + "<b>"+ number + "</b>" + " seconds left..." + "<br>");
 
-  //  Once number hits zero...
-  if (number === 0) {
-    //  ...run the stop function.
-    stop();
-    //  Alert the user that time is up.
-    alert("Time Up!");
+  //  The decrement function.
+  function decrement() {
+    //  Decrease number by one.
+    number--;
+    //  Show the number in the #show-number tag.
+    $("#timer").html("You have " + "<b>" + number + "</b>" + " seconds left..." + "<br><br>");
+
+    //if user clicks submit button before timer runs out, then run the evaluate score function
+    if ($("#submitButton").on("click", evaluateScore));
+
+    //  Once number hits zero...
+    if (number === 0) {
+      //  ...run the stop function.
+      stop();
+      //  Alert the user that time is up.
+      // alert("Time Up!");
+    }
   }
 }
 //  The stop function
@@ -114,53 +116,33 @@ function stop() {
   //  We just pass the name of the interval
   //  to the clearInterval function.
   clearInterval(intervalId);
+  //  Alert the user that time is up.
+  alert("Time Up!");
+  evaluateScore();
 }
-//  Execute the run function.
-run();
 
-function evaluateScore() {
+function evaluateScore(form) {
+  var answers = [0, 1, 3, 1, 0, 2, 2, 3]
+  var correctAnswers = 0;
 
-  var a = document.getElementByName("question");
-  var values = "";
-  for (var i = 0; i < a.length; i++) {
-    if (a[i].checked) {
-      val = allQuestions[i].choices;
-
-      if (val === 0) {
-        correctAnswers++
-      }
-      if (val === 1) {
-        correctAnswers++
-      }
-      if (val === 3) {
-        correctAnswers++
-      }
-      if (val === 1) {
+  for (var i = 0; i < allQuestions.questions.length; i++) {
+    if (form.elements[i].checked) {
+      if (form.elements[i].value == allQuestions.questions.choices[i]) {
         correctAnswers++
       }
     }
   }
   console.log("Number of answers correct: " + correctAnswers)
-
-  //the Game starts when you click the start game button
-  $(document).ready(function () {
-    $("#startButton").on("click", (startGame));
-
-    //     //set timer variables 
-    // var sec = 25;
-    // var time = setInterval(myTimer, 1000);
-    // //start timer function and write it to timer div
-    // function myTimer() {
-    //   document.getElementById('timer').innerHTML = sec + " seconds left";
-    //   sec--;
-    //   if (sec == -1) {
-    //     clearInterval(time);
-    //     alert("Time out!! :(");
-    //   }
-    // }
-  })
-
-
-  //Evalute score after you click the submit button
-  $("#submitButton").on("click", (evaluateScore));
 }
+
+
+//the Game starts when you click the start game button
+$(document).ready(function () {
+  $("#startButton").on("click", startGame);
+  console.log("the document is ready");
+})
+
+//Evalute score after you click the submit button
+// $("#submitButton").on("click", evaluateScore);
+// console.log("you clicked the submit button, run the evaluate score function");
+// })

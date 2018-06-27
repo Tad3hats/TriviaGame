@@ -110,24 +110,15 @@ function run() {
     }
   }
 }
-//  The stop function
-function stop() {
-  //  Clears our intervalId
-  //  We just pass the name of the interval
-  //  to the clearInterval function.
-  clearInterval(intervalId);
-  //  Alert the user that time is up.
-  alert("Time Up!");
-  evaluateScore();
-}
 
-function evaluateScore(form) {
+
+function evaluateScore(label) {
   var answers = [0, 1, 3, 1, 0, 2, 2, 3]
   var correctAnswers = 0;
 
   for (var i = 0; i < allQuestions.questions.length; i++) {
-    if (form.elements[i].checked) {
-      if (form.elements[i].value == allQuestions.questions.choices[i]) {
+    if (label.elements[i].checked) {
+      if (label.elements[i].value == allQuestions.questions.choices[i]) {
         correctAnswers++
       }
     }
@@ -142,7 +133,14 @@ $(document).ready(function () {
   console.log("the document is ready");
 })
 
-//Evalute score after you click the submit button
-// $("#submitButton").on("click", evaluateScore);
-// console.log("you clicked the submit button, run the evaluate score function");
-// })
+
+//  The stop function
+function stop() {
+  //  Clears our intervalId
+  //  We just pass the name of the interval
+  //  to the clearInterval function.
+  clearInterval(intervalId);
+  //  Alert the user that time is up.
+  alert("Time Up!");
+  evaluateScore();
+}

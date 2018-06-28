@@ -71,6 +71,9 @@ function startGame() {
   <button id="submitButton" text-align="center">submit your questions</button>
   `)
 
+  //  When the submit button gets clicked, run the stop function.
+  $("#submitButton").on("click", stop);
+
 }
 
 //  Set our number counter to 25.
@@ -80,9 +83,8 @@ var number = 35;
 var intervalId;
 
 //  When the start game button gets clicked, execute the run function.
-$("#startButton").on("click", run);
-//  When the submit button gets clicked, run the stop function.
-$("#submitButton").on("click", stop);
+  $("#startButton").on("click", run);
+
 
 //  The run function sets an interval
 //  that runs the decrement function once a second.
@@ -99,7 +101,7 @@ function run() {
     $("#timer").html("You have " + "<b>" + number + "</b>" + " seconds left..." + "<br><br>");
 
     //if user clicks submit button before timer runs out, then run the evaluate score function
-    if ($("#submitButton").on("click", evaluateScore));
+    // if ($("#submitButton").on("click", evaluateScore));
 
     //  Once number hits zero...
     if (number === 0) {
@@ -112,13 +114,12 @@ function run() {
 }
 
 
-function evaluateScore(label) {
-  var answers = [0, 1, 3, 1, 0, 2, 2, 3]
+function evaluateScore() {
   var correctAnswers = 0;
 
   for (var i = 0; i < allQuestions.questions.length; i++) {
-    if (label.elements[i].checked) {
-      if (label.elements[i].value == allQuestions.questions.choices[i]) {
+    var userSelected = $('input[name="question` + i + `"]:checked').val(); {
+      if (userSelected == allQuestions.questions[i].correct) {
         correctAnswers++
       }
     }
@@ -136,6 +137,7 @@ $(document).ready(function () {
 
 //  The stop function
 function stop() {
+  console.log("jackson");
   //  Clears our intervalId
   //  We just pass the name of the interval
   //  to the clearInterval function.

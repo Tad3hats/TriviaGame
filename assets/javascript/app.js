@@ -83,7 +83,7 @@ var number = 35;
 var intervalId;
 
 //  When the start game button gets clicked, execute the run function.
-  $("#startButton").on("click", run);
+$("#startButton").on("click", run);
 
 
 //  The run function sets an interval
@@ -137,7 +137,6 @@ $(document).ready(function () {
 
 //  The stop function
 function stop() {
-  console.log("jackson");
   //  Clears our intervalId
   //  We just pass the name of the interval
   //  to the clearInterval function.

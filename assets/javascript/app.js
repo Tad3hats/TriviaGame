@@ -125,6 +125,7 @@ function evaluateScore() {
     }
   }
   console.log("Number of answers correct: " + correctAnswers)
+  $(".correct").html("Number of answers correct: " + correctAnswers);
 }
 
 

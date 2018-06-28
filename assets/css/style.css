@@ -14,6 +14,11 @@ h1 {
     margin: 10px;
 }
 
+.correct {
+    background: pink;
+    width: 73%;
+}
+
 
 .row {
     height: 150px;

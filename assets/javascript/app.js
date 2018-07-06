@@ -76,7 +76,7 @@ function startGame() {
 
 }
 
-//  Set our number counter to 25.
+//  Set our number counter to 35.
 var number = 35;
 //  Variable that will hold our interval ID when we execute
 //  the "run" function
@@ -118,10 +118,13 @@ function evaluateScore() {
   var correctAnswers = 0;
 
   for (var i = 0; i < allQuestions.questions.length; i++) {
-    var userSelected = $('input[name="question` + i + `"]:checked').val(); {
+    var userSelected = $('input[name="question' + i + '"]:checked').val(); {
+      console.log(userSelected);
+      console.log("question" + i + ":" + allQuestions.questions[i].correct);
+      console.log("-----------");
       if (userSelected == allQuestions.questions[i].correct) {
         correctAnswers++
-      }
+      };
     }
   }
   console.log("Number of answers correct: " + correctAnswers)
